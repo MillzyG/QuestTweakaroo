@@ -1,0 +1,29 @@
+{
+  "id": "Tweakaroo",
+  "name": "Tweakaroo",
+  "version": "0.1.0",
+  "author": "MillzyG#3664",
+  "description": [
+    "A Mod that adds some tweaks to "Optimize" experience"
+  ],
+  "category": "Gameplay",
+  "gameVersion": "1.13.2",
+  "platform": "Quest",
+  "components": [
+    {
+      "type": "HookMod",
+      "installAction": {
+        "installLibraryFile": "libTweakaroo.so"
+      },
+      "uninstallAction": {
+        "removeLibraryFile": "libTweakaroo.so"
+      }
+    },
+    {
+      "type": "HookModLibrary",
+      "installAction": {
+        "installLibraryFile": "libbeatsaber-hook_1_0_10.so"
+      }
+    }
+  ]
+}
