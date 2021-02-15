@@ -20,7 +20,7 @@ rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 
 # Build the modloader shared library
 include $(CLEAR_VARS)
-# Creating prebuilt for dependency: modloader - version: 1.0.4
+LOCAL_MODULE := 
 include $(CLEAR_VARS)
 LOCAL_MODULE := modloader
 LOCAL_EXPORT_C_INCLUDES := extern/modloader
@@ -51,6 +51,7 @@ LOCAL_MODULE := custom-types
 LOCAL_EXPORT_C_INCLUDES := extern/custom-types
 LOCAL_SRC_FILES := extern/libcustom-types.so
 include $(PREBUILT_SHARED_LIBRARY)
+
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := Tweakaroo

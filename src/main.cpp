@@ -1,4 +1,5 @@
 #include "main.hpp"
+#include "modConfig.hpp"
 
 static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
 
@@ -20,8 +21,7 @@ extern "C" void setup(ModInfo& info) {
     info.id = ID;
     info.version = VERSION;
     modInfo = info;
-	
-    getConfig().Load(); // Load the config file
+    getModConfig().Init(modInfo);
     getLogger().info("Completed setup!");
 }
 
