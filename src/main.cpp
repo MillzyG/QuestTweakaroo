@@ -2,7 +2,7 @@
 
 #include "GlobalNamespace/PromoViewController.hpp"
 #include "GlobalNamespace/PauseMenuManager.hpp"
-    #include "LevelBar.hpp"
+    #include "GlobalNamespace/LevelBar.hpp"
         #include "TMPro/TextMeshProUGUI.hpp"
 
 #include "UnityEngine/GameObject.hpp"
@@ -10,7 +10,14 @@
 #include "beatsaber-hook/shared/utils/il2cpp-utils.hpp"
 #include "beatsaber-hook/shared/utils/utils.h"
 
+#include "questui/shared/QuestUI.hpp"
+#include "custom-types/shared/register.hpp"
+#include "SettingsViewContoller.hpp"
+
+
 static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
+
+
 
 // Loads the config from disk using our modInfo, then returns it for use
 Configuration& getConfig() {
@@ -31,9 +38,9 @@ MAKE_HOOK_OFFSETLESS(PromoViewController_DidActivate, void,
 ) {
 PromoViewController_DidActivate(self, firstActivation, addedToHierarchy, screenSystemEnabling);
 
-//  if ("Hide DLC Promo" is toggled on) {
+    if (getConfig().config["promo"] == true) {
         self->get_gameObject()->SetActive(false);
-//  }
+    }
 }
 
 // No Names
@@ -41,9 +48,9 @@ MAKE_HOOK_OFFSETLESS(PauseMenuManager_ShowMenu, void,
     GlobalNamespace::PauseMenuManager* self
 ) {
     PauseMenuManager_ShowMenu(self);
-//  if ("No Names" is toggled on) {
-    self->levelBar->authorNameText->get_gameObject()->SetActive(false);
-//  }
+    if (getConfig().config["names"] == true) {
+        self->levelBar->authorNameText->get_gameObject()->SetActive(false);
+    }
 }
 
 // Called at the early stages of game loading
@@ -52,6 +59,16 @@ extern "C" void setup(ModInfo& info) {
     info.version = VERSION;
     modInfo = info;
     getLogger().info("Completed setup!");
+
+    rapidjson::Document::AllocatorType& allocator = getConfig().config.GetAllocator();
+    if (!getConfig().config.HasMember("promo")) {
+        getConfig().config.AddMember("promo", rapidjson::Value(0).SetBool(true), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("names")) {
+        getConfig().config.AddMember("names", rapidjson::Value(0).SetBool(false), allocator);
+        getConfig().Write();
+    }
 }
 
 // Called later on in the game loading - a good time to install function hooks
@@ -62,5 +79,7 @@ extern "C" void load() {
 
     getLogger().info("Installing hooks...");
     // Install our hooks (none defined yet)
+    custom_types::Register::RegisterType<Tweakaroo::SettingsViewController>();
+    QuestUI::Register::RegisterModSettingsViewController<Tweakaroo::SettingsViewController*>(modInfo);
     getLogger().info("Installed all hooks!");
 }
