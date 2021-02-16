@@ -11,7 +11,7 @@ Note: **All Features are Togglable**
 
 #### - I'm Not Interested:
 > Disables the DLC Promo in the main menu.
-![INIDemoImage](https://github.com/MillzyG/QuestTweakaroo/blob/main/GitHub-Assets/I'm%20Not%20Interested.png?raw=true)
+![INIDemoImage](https://github.com/MillzyG/QuestTweakaroo/blob/main/GitHub-Assets/I'm%20Not%20Intersted.png?raw=true)
 
 #### - No Names:
 > Removes the Artist name from the Level Bar in the Pause Menu.
