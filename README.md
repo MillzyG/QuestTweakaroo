@@ -9,11 +9,6 @@ Note: **All Features are Togglable**
 #### - I'm Not Interested:
 > Disables the DLC Promo in the main menu.
 
-#### - No Health And Safety:
-> Disables the annoying Health and Safety screen. (May have compatibility issues with other mods)
-
-Credit: [Lauriethefish](https://github.com/Lauriethefish)
-
 #### - No Names:
 > Removes the Artist name from the Level Bar in the Pause Menu.
 
