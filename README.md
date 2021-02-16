@@ -12,6 +12,9 @@ Note: **All Features are Togglable**
 #### - No Names:
 > Removes the Artist name from the Level Bar in the Pause Menu.
 
+#### - RGB Menu
+> Allows you to change the colour of the text in the Main Menu.
+
 #### - Specific Haptics: (1.1.0)
 > Allows you to toggle haptics triggered by different events.
 
