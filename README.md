@@ -11,6 +11,7 @@ Note: **All Features are Togglable**
 
 #### - No Health And Safety:
 > Disables the annoying Health and Safety screen. (May have compatibility issues with other mods)
+> Credit to [Lauriethefish](https://github.com/Lauriethefish)
 
 #### - No Names:
 > Removes the Artist name from the Level Bar in the Pause Menu.
