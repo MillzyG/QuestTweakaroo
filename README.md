@@ -6,7 +6,7 @@ Note: **All Features are Togglable**
 
 ### Tweaks Included:
 
-#### - Descriptive Labels:
+#### - Descriptive Labels: (1.1.0)
 > Makes the labels that apear when you hover over Icon Buttons more descriptive
 
 #### - I'm Not Interested:
