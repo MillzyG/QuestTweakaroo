@@ -63,9 +63,9 @@ MAKE_HOOK_OFFSETLESS(MainMenuViewController_DidActivate, void,
     auto* multiplayer_text = campaign_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
 
     UnityEngine::Color solo_textColour = UnityEngine::Color(getConfig().config["textR"].GetFloat(), getConfig().config["textG"].GetFloat(), getConfig().config["textB"].GetFloat(), 1);
-    UnityEngine::Color campaign_textColour = UnityEngine::Color(1, 1, 1, 1);
-    UnityEngine::Color party_textColour = UnityEngine::Color(1, 1, 1, 1);
-    UnityEngine::Color multiplayer_textColour = UnityEngine::Color(1, 1, 1, 1);
+    UnityEngine::Color campaign_textColour = UnityEngine::Color(getConfig().config["campaignR"].GetFloat(), getConfig().config["campaignG"].GetFloat(), getConfig().config["campaignB"].GetFloat(), 1);
+    UnityEngine::Color party_textColour = UnityEngine::Color(getConfig().config["partyR"].GetFloat(), getConfig().config["partyG"].GetFloat(), getConfig().config["partyB"].GetFloat(), 1);
+    UnityEngine::Color multiplayer_textColour = UnityEngine::Color(getConfig().config["multiplayerR"].GetFloat(), getConfig().config["multiplayerG"].GetFloat(), getConfig().config["multiplayerB"].GetFloat(), 1);
 
     solo_text->set_color(solo_textColour);
     campaign_text->set_color(campaign_textColour);
@@ -110,6 +110,14 @@ extern "C" void setup(ModInfo& info) {
         getConfig().config.AddMember("names", rapidjson::Value(0).SetBool(false), allocator);
         getConfig().Write();
     }
+    if (!getConfig().config.HasMember("color")) {
+        getConfig().config.AddMember("color", rapidjson::Value(0).SetBool(true), allocator);
+        getConfig().Write();
+    }
+
+
+    //Colors
+    //solo
     if (!getConfig().config.HasMember("textR")) {
         getConfig().config.AddMember("textR", rapidjson::Value(0).SetFloat(1), allocator);
         getConfig().Write();
@@ -120,6 +128,45 @@ extern "C" void setup(ModInfo& info) {
     }
     if (!getConfig().config.HasMember("textB")) {
         getConfig().config.AddMember("textB", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    //campaign
+    if (!getConfig().config.HasMember("campaignR")) {
+        getConfig().config.AddMember("campaignR", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("campaignG")) {
+        getConfig().config.AddMember("campaignG", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("campaignB")) {
+        getConfig().config.AddMember("campaignB", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    //party
+    if (!getConfig().config.HasMember("partyR")) {
+        getConfig().config.AddMember("partyR", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("partyG")) {
+        getConfig().config.AddMember("partyG", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("partyB")) {
+        getConfig().config.AddMember("partyB", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    //multiplayer
+    if (!getConfig().config.HasMember("multiplayerR")) {
+        getConfig().config.AddMember("multiplayerR", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("multiplayerG")) {
+        getConfig().config.AddMember("multiplayerG", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("multiplayerB")) {
+        getConfig().config.AddMember("multiplayerB", rapidjson::Value(0).SetFloat(1), allocator);
         getConfig().Write();
     }
 }
