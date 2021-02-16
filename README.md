@@ -11,7 +11,7 @@ Note: **All Features are Togglable**
 #### - "Im Not Interested In What You're Selling!":
 > This tweak disables the DLC Promo in the main menu.
 
-#### - Specific Haptics:
+#### - Specific Haptics: (1.1.0)
 > Specific Haptics allows you to toggle haptics triggered by different events.
 
 ## Developers
