@@ -6,6 +6,8 @@ Note: **All Features are Togglable**
 
 ### Tweaks Included:
 
+#### - No Health And Safety
+
 #### - "Im Not Interested In What You're Selling!":
 > This tweak disables the DLC Promo in the main menu.
 
