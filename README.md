@@ -1,6 +1,6 @@
 # Tweakaroo
 
-##### Tweakaroo is a "compilation" of tweaks and changes to make small improvements to the game
+##### Tweakaroo is a "compilation" of tweaks and changes to make minor changes to the game
 
 Note: **All Features are Togglable**
 
