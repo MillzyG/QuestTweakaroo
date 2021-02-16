@@ -1,6 +1,6 @@
 # Tweakaroo
 
-##### Tweakaroo is a "compilation" of tweaks to make minor changes to the game
+##### Tweakaroo is a "compilation" of minor changes/modifications to the game
 
 Note: **All Features are Togglable**
 
@@ -11,9 +11,11 @@ Note: **All Features are Togglable**
 
 #### - I'm Not Interested:
 > Disables the DLC Promo in the main menu.
+![INIDemoImage](https://github.com/MillzyG/QuestTweakaroo/blob/main/GitHub-Assets/I'm%20Not%20Interested.png?raw=true)
 
 #### - No Names:
 > Removes the Artist name from the Level Bar in the Pause Menu.
+![NNDemoImage](https://github.com/MillzyG/QuestTweakaroo/blob/main/GitHub-Assets/NoNames.png?raw=true)
 
 #### - RGB Menu
 > Allows you to change the colour of the text in the Main Menu.
