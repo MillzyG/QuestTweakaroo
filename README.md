@@ -5,14 +5,15 @@
 Note: **All Features are Togglable**
 
 ### Tweaks Included:
+
+#### - I'm Not Interested:
+> Disables the DLC Promo in the main menu.
+
 #### - No Names:
-> No Names removes Song Artist names from "unnecessary places".
+> Removes the Artist name from the Level Bar in the Pause Menu.
 
-#### - "Im Not Interested In What You're Selling!":
-> This tweak disables the DLC Promo in the main menu.
-
-#### - Specific Haptics:
-> Specific Haptics allows you to toggle haptics triggered by different events.
+#### - Specific Haptics: (1.1.0)
+> Allows you to toggle haptics triggered by different events.
 
 ## Developers
 * [MillzyG](https://github.com/MillzyG)
