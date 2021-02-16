@@ -53,10 +53,24 @@ MAKE_HOOK_OFFSETLESS(MainMenuViewController_DidActivate, void,
     auto* solo_button = UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("SoloButton"));
     auto* solo_text = solo_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
 
+    auto* campaign_button =  UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("CampaignButton"));
+    auto* campaign_text = campaign_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
 
-    UnityEngine::Color textColour = UnityEngine::Color(getConfig().config["textR"].GetFloat(), getConfig().config["textG"].GetFloat(), getConfig().config["textB"].GetFloat(), 1);
+    auto* party_button =  UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("PartyButton"));
+    auto* party_text = party_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
 
-    solo_text->set_color(textColour);
+    auto* multiplayer_button =  UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("MultiplayerButton"));
+    auto* multiplayer_text = campaign_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
+
+    UnityEngine::Color solo_textColour = UnityEngine::Color(getConfig().config["textR"].GetFloat(), getConfig().config["textG"].GetFloat(), getConfig().config["textB"].GetFloat(), 1);
+    UnityEngine::Color campaign_textColour = UnityEngine::Color(1, 1, 1, 1);
+    UnityEngine::Color party_textColour = UnityEngine::Color(1, 1, 1, 1);
+    UnityEngine::Color multiplayer_textColour = UnityEngine::Color(1, 1, 1, 1);
+
+    solo_text->set_color(solo_textColour);
+    campaign_text->set_color(campaign_textColour);
+    party_text->set_color(party_textColour);
+    multiplayer_text->set_color(multiplayer_textColour);
 }
 
 // I'm Not Interested
