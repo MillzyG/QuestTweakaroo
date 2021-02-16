@@ -2,10 +2,21 @@
 
 #include "GlobalNamespace/PromoViewController.hpp"
 #include "GlobalNamespace/PauseMenuManager.hpp"
-    #include "GlobalNamespace/LevelBar.hpp"
-        #include "TMPro/TextMeshProUGUI.hpp"
+#include "GlobalNamespace/LevelBar.hpp"
+#include "GlobalNamespace/MainMenuViewController.hpp"
+
+#include "TMPro/TextMeshProUGUI.hpp"
+#include "HMUI/CurvedTextMeshPro.hpp"
+#include "HMUI/ViewController.hpp"
+#include "HMUI/ViewController_AnimationType.hpp"
+
+#include "TMPro/TextMeshProUGUI.hpp"
+#include "HMUI/CurvedTextMeshPro.hpp"
+#include "HMUI/ViewController.hpp"
+#include "HMUI/ViewController_AnimationType.hpp"
 
 #include "UnityEngine/GameObject.hpp"
+#include "UnityEngine/SceneManagement/SceneManager.hpp"
 
 #include "beatsaber-hook/shared/utils/il2cpp-utils.hpp"
 #include "beatsaber-hook/shared/utils/utils.h"
@@ -30,6 +41,22 @@ Configuration& getConfig() {
 Logger& getLogger() {
     static Logger* logger = new Logger(modInfo);
     return *logger;
+}
+
+
+//RGB Menu
+MAKE_HOOK_OFFSETLESS(MainMenuViewController_DidActivate, void,
+    GlobalNamespace::MainMenuViewController* self, bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling
+) {
+    MainMenuViewController_DidActivate(self, firstActivation, addedToHierarchy, screenSystemEnabling);
+
+    auto* solo_button = UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("SoloButton"));
+    auto* solo_text = solo_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
+
+
+    UnityEngine::Color textColour = UnityEngine::Color(1, 0, 0, 1);
+
+    solo_text->set_color(textColour);
 }
 
 // I'm Not Interested
@@ -76,6 +103,8 @@ extern "C" void load() {
     il2cpp_functions::Init();
 
     INSTALL_HOOK_OFFSETLESS(getLogger(), PromoViewController_DidActivate, il2cpp_utils::FindMethodUnsafe("", "PromoViewController", "DidActivate", 3));
+    INSTALL_HOOK_OFFSETLESS(getLogger(), PauseMenuManager_ShowMenu, il2cpp_utils::FindMethodUnsafe("", "PauseMenuManager", "ShowMenu", 0));
+    INSTALL_HOOK_OFFSETLESS(getLogger(), MainMenuViewController_DidActivate, il2cpp_utils::FindMethodUnsafe("", "MainMenuViewController", "DidActivate", 3));
 
     getLogger().info("Installing hooks...");
     // Install our hooks (none defined yet)
