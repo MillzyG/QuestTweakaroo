@@ -54,7 +54,7 @@ MAKE_HOOK_OFFSETLESS(MainMenuViewController_DidActivate, void,
     auto* solo_text = solo_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
 
 
-    UnityEngine::Color textColour = UnityEngine::Color(1, 0, 0, 1);
+    UnityEngine::Color textColour = UnityEngine::Color(getConfig().config["textR"].GetFloat(), getConfig().config["textG"].GetFloat(), getConfig().config["textB"].GetFloat(), 1);
 
     solo_text->set_color(textColour);
 }
@@ -94,6 +94,18 @@ extern "C" void setup(ModInfo& info) {
     }
     if (!getConfig().config.HasMember("names")) {
         getConfig().config.AddMember("names", rapidjson::Value(0).SetBool(false), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("textR")) {
+        getConfig().config.AddMember("textR", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("textG")) {
+        getConfig().config.AddMember("textG", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("textB")) {
+        getConfig().config.AddMember("textB", rapidjson::Value(0).SetFloat(1), allocator);
         getConfig().Write();
     }
 }

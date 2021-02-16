@@ -28,6 +28,15 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
                 getConfig().config["names"].SetBool(value);
             }
         );
+
+        //Menu text color
+        BeatSaberUI::CreateColorPicker(container->get_transform(), "Menu Text Color", UnityEngine::Color(getConfig().config["textR"].GetFloat(), getConfig().config["textR"].GetFloat(), getConfig().config["textR"].GetFloat(), 1), 
+            [](UnityEngine::Color color, GlobalNamespace::ColorChangeUIEventType evnetType){
+                getConfig().config["textR"].SetFloat(color.r);
+                getConfig().config["textG"].SetFloat(color.g);
+                getConfig().config["textB"].SetFloat(color.b);
+            }
+        );
     }
 }
 
