@@ -5,8 +5,6 @@
 Note: **All Features are Togglable**
 
 ### Tweaks Included:
-#### - No Names:
-> No Names removes Song Artist names from "unnecessary places".
 
 #### - "Im Not Interested In What You're Selling!":
 > This tweak disables the DLC Promo in the main menu.
