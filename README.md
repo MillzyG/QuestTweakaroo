@@ -6,13 +6,17 @@ Note: **All Features are Togglable**
 
 ### Tweaks Included:
 
-#### - No Health And Safety
+#### - I'm Not Interested:
+> Disables the DLC Promo in the main menu.
 
-#### - "Im Not Interested In What You're Selling!":
-> This tweak disables the DLC Promo in the main menu.
+#### - No Health And Safety:
+> Disables the annoying Health and Safety screen. (May have compatibility issues with other mods)
+
+#### - No Names:
+> Removes the Artist name from the Level Bar in the Pause Menu.
 
 #### - Specific Haptics: (1.1.0)
-> Specific Haptics allows you to toggle haptics triggered by different events.
+> Allows you to toggle haptics triggered by different events.
 
 ## Developers
 * [MillzyG](https://github.com/MillzyG)
