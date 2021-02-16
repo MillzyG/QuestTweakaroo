@@ -6,6 +6,9 @@ Note: **All Features are Togglable**
 
 ### Tweaks Included:
 
+#### - Descriptive Labels:
+> Makes the labels that apear when you hover over Icon Buttons more descriptive
+
 #### - I'm Not Interested:
 > Disables the DLC Promo in the main menu.
 
