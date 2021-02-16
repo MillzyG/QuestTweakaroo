@@ -10,7 +10,7 @@ Note: **All Features are Togglable**
 > Disables the DLC Promo in the main menu.
 
 #### - No Health And Safety:
-> Disables the annoying Health and Safety screen. (May have compatibility issues with other mods)
+> Disables the annoying Health and Safety screen. (May have compatibility issues with other mods)\n
 > Credit to [Lauriethefish](https://github.com/Lauriethefish)
 
 #### - No Names:
