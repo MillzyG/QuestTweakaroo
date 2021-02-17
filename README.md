@@ -5,7 +5,7 @@
 Note: 
 > **All Features are Togglable**
 > 
-> **Some Changes May Require a Restart
+> **Some Changes May Require a Restart**
 
 ### Tweaks Included:
 
