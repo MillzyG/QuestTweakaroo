@@ -35,7 +35,7 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
         auto text = BeatSaberUI::CreateText(container->get_transform(), "(Some changes may require a restart to take effect)");
         text->set_color(UnityEngine::Color::get_red());
 
-        auto promo_separator = BeatSaberUI::CreateText(container->get_transform(), "----- I'm Not Interested -----");
+        auto promo_separator = BeatSaberUI::CreateText(container->get_transform(), "───── I'm Not Interested ─────");
         promo_separator->set_alignment(TMPro::TextAlignmentOptions::Midline);
         promo_separator->set_color(UnityEngine::Color::get_gray());
 
@@ -46,7 +46,7 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
             }
         );
 
-        auto noname_separator = BeatSaberUI::CreateText(container->get_transform(), "----- No Names -----");
+        auto noname_separator = BeatSaberUI::CreateText(container->get_transform(), "───── No Names ─────");
         noname_separator->set_alignment(TMPro::TextAlignmentOptions::Midline);
         noname_separator->set_color(UnityEngine::Color::get_gray());
 
@@ -58,7 +58,7 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
 
         //Menu text color
 
-        auto rgbmenu_separator = BeatSaberUI::CreateText(container->get_transform(), "----- RGB Menu -----");
+        auto rgbmenu_separator = BeatSaberUI::CreateText(container->get_transform(), "───── RGB Menu ─────");
         rgbmenu_separator->set_alignment(TMPro::TextAlignmentOptions::Midline);
         rgbmenu_separator->set_color(UnityEngine::Color::get_gray());
 
