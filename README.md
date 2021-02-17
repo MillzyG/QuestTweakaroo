@@ -2,7 +2,10 @@
 
 ##### Tweakaroo is a "compilation" of minor changes/modifications to the game
 
-Note: **All Features are Togglable**
+Note: 
+> **All Features are Togglable**
+> 
+> **Some Changes May Require a Restart
 
 ### Tweaks Included:
 
@@ -24,6 +27,9 @@ Note: **All Features are Togglable**
 
 #### - Specific Haptics: (1.1.0)
 > Allows you to toggle haptics triggered by different events.
+
+#### - Void Menu Environment
+> Disables the Menu Environment to become a Void.
 
 ## Developers
 * [MillzyG](https://github.com/MillzyG)
