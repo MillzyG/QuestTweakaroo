@@ -30,6 +30,7 @@ UnityEngine::GameObject* multiplayerPicker;
 UnityEngine::UI::Toggle* promoToggle;
 UnityEngine::UI::Toggle* nameToggle;
 UnityEngine::UI::Toggle* colorToggle;
+UnityEngine::UI::Toggle* voidMenuToggle;
 
 void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling){
     if(firstActivation){
@@ -101,6 +102,20 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
 
             }
         );
+
+        // Void Menu
+
+        auto voidmenu_separator = BeatSaberUI::CreateText(container->get_transform(), "Void Menu");
+        voidmenu_separator->set_alignment(TMPro::TextAlignmentOptions::Midline);
+        voidmenu_separator->set_color(UnityEngine::Color::get_gray());
+        voidmenu_separator->set_fontStyle(TMPro::FontStyles::Underline);
+        
+        voidMenuToggle = BeatSaberUI::CreateToggle(container->get_transform(), "Void Menu", getConfig().config["voidMenu"].GetBool(),
+            [](bool value) {
+                getConfig().config["voidMenu"].SetBool(value);
+            }
+        );  
+        
     }
 }
 

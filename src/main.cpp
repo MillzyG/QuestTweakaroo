@@ -50,6 +50,8 @@ MAKE_HOOK_OFFSETLESS(MainMenuViewController_DidActivate, void,
 ) {
     MainMenuViewController_DidActivate(self, firstActivation, addedToHierarchy, screenSystemEnabling);
 
+
+    // RGB MENU
     auto* solo_button = UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("SoloButton"));
     auto* solo_text = solo_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
 
@@ -71,6 +73,15 @@ MAKE_HOOK_OFFSETLESS(MainMenuViewController_DidActivate, void,
     campaign_text->set_color(campaign_textColour);
     party_text->set_color(party_textColour);
     multiplayer_text->set_color(multiplayer_textColour);
+
+
+    // VOID MENU ENVIRONMENT
+    if (getConfig().config["voidMenu"] == true ){
+        auto logo = UnityEngine::GameObject::Instantiate(UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("Logo")));
+
+        UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("MenuEnvironment"))->SetActive(false);
+    }
+    
 }
 
 // I'm Not Interested
@@ -103,7 +114,7 @@ extern "C" void setup(ModInfo& info) {
 
     rapidjson::Document::AllocatorType& allocator = getConfig().config.GetAllocator();
     if (!getConfig().config.HasMember("promo")) {
-        getConfig().config.AddMember("promo", rapidjson::Value(0).SetBool(true), allocator);
+        getConfig().config.AddMember("promo", rapidjson::Value(0).SetBool(false), allocator);
         getConfig().Write();
     }
     if (!getConfig().config.HasMember("names")) {
@@ -111,7 +122,7 @@ extern "C" void setup(ModInfo& info) {
         getConfig().Write();
     }
     if (!getConfig().config.HasMember("color")) {
-        getConfig().config.AddMember("color", rapidjson::Value(0).SetBool(true), allocator);
+        getConfig().config.AddMember("color", rapidjson::Value(0).SetBool(false), allocator);
         getConfig().Write();
     }
 
@@ -156,6 +167,13 @@ extern "C" void setup(ModInfo& info) {
         getConfig().config.AddMember("partyB", rapidjson::Value(0).SetFloat(1), allocator);
         getConfig().Write();
     }
+
+    // Void Menu
+    if (!getConfig().config.HasMember("voidMenu")) {
+        getConfig().config.AddMember("voidMenu", rapidjson::Value(0).SetBool(false), allocator);
+        getConfig().Write();
+    }
+
 }
 
 // Called later on in the game loading - a good time to install function hooks
