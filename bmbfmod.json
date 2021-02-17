@@ -1,10 +1,10 @@
 {
   "id": "Tweakaroo",
   "name": "Tweakaroo",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "MillzyG#3664",
   "description": [
-    "A Mod that adds some tweaks to "Optimize" experience"
+    "A Mod that adds some tweaks to \"Optimize\" experience"
   ],
   "category": "Gameplay",
   "gameVersion": "1.13.2",
