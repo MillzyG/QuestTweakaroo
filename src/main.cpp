@@ -118,16 +118,16 @@ extern "C" void setup(ModInfo& info) {
 
     //Colors
     //solo
-    if (!getConfig().config.HasMember("textR")) {
-        getConfig().config.AddMember("textR", rapidjson::Value(0).SetFloat(1), allocator);
+    if (!getConfig().config.HasMember("soloR")) {
+        getConfig().config.AddMember("soloR", rapidjson::Value(0).SetFloat(1), allocator);
         getConfig().Write();
     }
-    if (!getConfig().config.HasMember("textG")) {
+    if (!getConfig().config.HasMember("soloG")) {
         getConfig().config.AddMember("textG", rapidjson::Value(0).SetFloat(1), allocator);
         getConfig().Write();
     }
-    if (!getConfig().config.HasMember("textB")) {
-        getConfig().config.AddMember("textB", rapidjson::Value(0).SetFloat(1), allocator);
+    if (!getConfig().config.HasMember("soloB")) {
+        getConfig().config.AddMember("soloB", rapidjson::Value(0).SetFloat(1), allocator);
         getConfig().Write();
     }
     //campaign
@@ -154,19 +154,6 @@ extern "C" void setup(ModInfo& info) {
     }
     if (!getConfig().config.HasMember("partyB")) {
         getConfig().config.AddMember("partyB", rapidjson::Value(0).SetFloat(1), allocator);
-        getConfig().Write();
-    }
-    //multiplayer
-    if (!getConfig().config.HasMember("multiplayerR")) {
-        getConfig().config.AddMember("multiplayerR", rapidjson::Value(0).SetFloat(1), allocator);
-        getConfig().Write();
-    }
-    if (!getConfig().config.HasMember("multiplayerG")) {
-        getConfig().config.AddMember("multiplayerG", rapidjson::Value(0).SetFloat(1), allocator);
-        getConfig().Write();
-    }
-    if (!getConfig().config.HasMember("multiplayerB")) {
-        getConfig().config.AddMember("multiplayerB", rapidjson::Value(0).SetFloat(1), allocator);
         getConfig().Write();
     }
 }

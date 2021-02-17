@@ -2,6 +2,8 @@
 #include "main.hpp"
 
 #include "questui/shared/BeatSaberUI.hpp"
+#include "questui/shared/CustomTypes/Components/ExternalComponents.hpp"
+#include "questui/shared/CustomTypes/Components/Backgroundable.hpp"
 using namespace QuestUI;
 
 #include "UnityEngine/Color.hpp"
@@ -9,6 +11,9 @@ using namespace QuestUI;
 #include "UnityEngine/Vector3.hpp"
 #include "UnityEngine/UI/VerticalLayoutGroup.hpp"
 #include "UnityEngine/UI/Toggle.hpp"
+#include "UnityEngine/UI/Image.hpp"
+
+
 
 DEFINE_CLASS(Tweakaroo::SettingsViewController);
 
@@ -35,9 +40,10 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
         auto text = BeatSaberUI::CreateText(container->get_transform(), "(Some changes may require a restart to take effect)");
         text->set_color(UnityEngine::Color::get_red());
 
-        auto promo_separator = BeatSaberUI::CreateText(container->get_transform(), "───── I'm Not Interested ─────");
+        auto promo_separator = BeatSaberUI::CreateText(container->get_transform(), "I'm Not Interested");
         promo_separator->set_alignment(TMPro::TextAlignmentOptions::Midline);
         promo_separator->set_color(UnityEngine::Color::get_gray());
+        promo_separator->set_fontStyle(TMPro::FontStyles::Underline);
 
         //Create toggles
         promoToggle = BeatSaberUI::CreateToggle(container->get_transform(), "Hide DLC Promo", getConfig().config["promo"].GetBool(), 
@@ -46,9 +52,10 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
             }
         );
 
-        auto noname_separator = BeatSaberUI::CreateText(container->get_transform(), "───── No Names ─────");
+        auto noname_separator = BeatSaberUI::CreateText(container->get_transform(), "No Names");
         noname_separator->set_alignment(TMPro::TextAlignmentOptions::Midline);
         noname_separator->set_color(UnityEngine::Color::get_gray());
+        noname_separator->set_fontStyle(TMPro::FontStyles::Underline);
 
         nameToggle = BeatSaberUI::CreateToggle(container->get_transform(), "Hide Artist Names", getConfig().config["names"].GetBool(), 
             [](bool value){
@@ -58,9 +65,10 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
 
         //Menu text color
 
-        auto rgbmenu_separator = BeatSaberUI::CreateText(container->get_transform(), "───── RGB Menu ─────");
+        auto rgbmenu_separator = BeatSaberUI::CreateText(container->get_transform(), "RGB Menu");
         rgbmenu_separator->set_alignment(TMPro::TextAlignmentOptions::Midline);
         rgbmenu_separator->set_color(UnityEngine::Color::get_gray());
+        rgbmenu_separator->set_fontStyle(TMPro::FontStyles::Underline);
 
         colorToggle = BeatSaberUI::CreateToggle(container->get_transform(), "Override Menu Text Colors", getConfig().config["color"].GetBool(), 
             [](bool value){
@@ -69,11 +77,11 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
         );
 
         //solo
-        soloPicker = BeatSaberUI::CreateColorPicker(container->get_transform(), "Solo Text", UnityEngine::Color(getConfig().config["textR"].GetFloat(), getConfig().config["textR"].GetFloat(), getConfig().config["textR"].GetFloat(), 1), 
+        soloPicker = BeatSaberUI::CreateColorPicker(container->get_transform(), "Solo Text", UnityEngine::Color(getConfig().config["soloR"].GetFloat(), getConfig().config["soloR"].GetFloat(), getConfig().config["soloR"].GetFloat(), 1), 
             [](UnityEngine::Color color, GlobalNamespace::ColorChangeUIEventType evnetType){
-                getConfig().config["textR"].SetFloat(color.r);
-                getConfig().config["textG"].SetFloat(color.g);
-                getConfig().config["textB"].SetFloat(color.b);
+                getConfig().config["soloR"].SetFloat(color.r);
+                getConfig().config["soloG"].SetFloat(color.g);
+                getConfig().config["soloB"].SetFloat(color.b);
             }
         );
         //campaign
@@ -90,14 +98,6 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
                 getConfig().config["partyR"].SetFloat(color.r);
                 getConfig().config["partyG"].SetFloat(color.g);
                 getConfig().config["partyB"].SetFloat(color.b);
-            }
-        );
-        //multiplayer
-        multiplayerPicker = BeatSaberUI::CreateColorPicker(container->get_transform(), "Multiplayer Text", UnityEngine::Color(getConfig().config["multiplayerR"].GetFloat(), getConfig().config["multiplayerR"].GetFloat(), getConfig().config["multiplayerR"].GetFloat(), 1), 
-            [](UnityEngine::Color color, GlobalNamespace::ColorChangeUIEventType evnetType){
-                getConfig().config["multiplayerR"].SetFloat(color.r);
-                getConfig().config["multiplayerG"].SetFloat(color.g);
-                getConfig().config["multiplayerB"].SetFloat(color.b);
             }
         );
     }
