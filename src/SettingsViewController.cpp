@@ -98,6 +98,7 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
                 getConfig().config["partyR"].SetFloat(color.r);
                 getConfig().config["partyG"].SetFloat(color.g);
                 getConfig().config["partyB"].SetFloat(color.b);
+
             }
         );
     }
