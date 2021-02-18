@@ -94,7 +94,9 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
         colorToggle = BeatSaberUI::CreateToggle(container->get_transform(), "Override Menu Colors", getConfig().config["color"].GetBool(), 
             [](bool value){
                 getConfig().config["color"].SetBool(value);
-                if(!value){
+                if(!getConfig().config["voidMenu"].GetBool() && UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("MenuEnvironment"))->get_activeSelf()){
+                    colorMng = UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("ColorManager"))->GetComponent<Tweakaroo::ColorManager*>();
+                    if(!value){
                     colorMng->SetColors(leftDefault, rightDefault);
                 }
                 else{
@@ -102,6 +104,7 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
                 }
 
                 getConfig().Write();
+                }
             }
         );
 
@@ -113,7 +116,10 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
                     getConfig().config["leftG"].SetFloat(color.g);
                     getConfig().config["leftB"].SetFloat(color.b);
 
-                    colorMng->SetColors(color, UnityEngine::Color(getConfig().config["rightR"].GetFloat(), getConfig().config["rightG"].GetFloat(), getConfig().config["rightB"].GetFloat(), 1));
+                    if(!getConfig().config["voidMenu"].GetBool() && UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("MenuEnvironment"))->get_activeSelf()){
+                        colorMng = UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("ColorManager"))->GetComponent<Tweakaroo::ColorManager*>();
+                        colorMng->SetColors(color, UnityEngine::Color(getConfig().config["rightR"].GetFloat(), getConfig().config["rightG"].GetFloat(), getConfig().config["rightB"].GetFloat(), 1));
+                    }
                 }
             }
         );
@@ -123,8 +129,11 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
                     getConfig().config["rightR"].SetFloat(color.r);
                     getConfig().config["rightG"].SetFloat(color.g);
                     getConfig().config["rightB"].SetFloat(color.b);
-
-                    colorMng->SetColors(UnityEngine::Color(getConfig().config["leftR"].GetFloat(), getConfig().config["leftG"].GetFloat(), getConfig().config["leftB"].GetFloat(), 1), color);
+                    
+                    if(!getConfig().config["voidMenu"].GetBool() && UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("MenuEnvironment"))->get_activeSelf()){
+                        colorMng = UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("ColorManager"))->GetComponent<Tweakaroo::ColorManager*>();
+                        colorMng->SetColors(UnityEngine::Color(getConfig().config["leftR"].GetFloat(), getConfig().config["leftG"].GetFloat(), getConfig().config["leftB"].GetFloat(), 1), color);
+                    }
                 }
             }
         );

@@ -101,7 +101,9 @@ MAKE_HOOK_OFFSETLESS(MainMenuViewController_DidActivate, void,
         UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("MenuEnvironment"))->SetActive(false);
     }
 
-    colorManager = UnityEngine::GameObject::New_ctor(il2cpp_utils::createcsstr("ColorManager"))->AddComponent<Tweakaroo::ColorManager*>();
+    if(!getConfig().config["voidMenu"].GetBool() && UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("MenuEnvironment"))->get_activeSelf()){
+        colorManager = UnityEngine::GameObject::New_ctor(il2cpp_utils::createcsstr("ColorManager"))->AddComponent<Tweakaroo::ColorManager*>();
+    }
 }
 
 // I'm Not Interested
