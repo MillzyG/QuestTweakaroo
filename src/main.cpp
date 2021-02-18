@@ -59,7 +59,7 @@ MAKE_HOOK_OFFSETLESS(MainMenuViewController_DidActivate, void,
         auto* party_text = party_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
 
         auto* online_button =  UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("OnlineButton"));
-        auto* online_text = party_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
+        auto* online_text = online_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
 
         
 
@@ -82,11 +82,11 @@ MAKE_HOOK_OFFSETLESS(MainMenuViewController_DidActivate, void,
         campaign_text->set_color(UnityEngine::Color::get_white());
         party_text->set_color(UnityEngine::Color::get_white());
         online_text->set_color(UnityEngine::Color::get_white());
-        
+
     }
 
     // VOID MENU ENVIRONMENT
-    if (getConfig().config["voidMenu"] == true ){
+    if (getConfig().config["voidMenu"] == true && firstActivation){
         UnityEngine::GameObject::Instantiate(UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("Logo")));
         UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("MenuEnvironment"))->SetActive(false);
     }
