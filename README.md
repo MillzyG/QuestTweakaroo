@@ -2,7 +2,10 @@
 
 ##### Tweakaroo is a "compilation" of minor changes/modifications to the game
 
-Note: **All Features are Togglable**
+Note: 
+> **All Features are Togglable**
+> 
+> **Some Changes May Require a Restart**
 
 ### Tweaks Included:
 
@@ -15,7 +18,7 @@ Note: **All Features are Togglable**
 ![INIDemoImage](https://github.com/MillzyG/QuestTweakaroo/blob/main/GitHub-Assets/I'm%20Not%20Intersted.png?raw=true)
 
 #### - No Names:
-> Removes the Artist name from the Level Bar in the Pause Menu.
+> Removes the Artist/Mapper name from the Level Bar in the Pause Menu.
 
 ![NNDemoImage](https://github.com/MillzyG/QuestTweakaroo/blob/main/GitHub-Assets/NoNames.png?raw=true)
 
@@ -24,6 +27,9 @@ Note: **All Features are Togglable**
 
 #### - Specific Haptics: (1.1.0)
 > Allows you to toggle haptics triggered by different events.
+
+#### - Void Menu Environment
+> Disables the Menu Environment to become a Void.
 
 ## Developers
 * [MillzyG](https://github.com/MillzyG)
