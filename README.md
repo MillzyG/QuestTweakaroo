@@ -14,22 +14,26 @@ Note:
 
 #### - I'm Not Interested:
 > Disables the DLC Promo in the main menu.
-
-![INIDemoImage](https://github.com/MillzyG/QuestTweakaroo/blob/main/GitHub-Assets/I'm%20Not%20Intersted.png?raw=true)
+>
+> ![INIDemoImage](https://github.com/MillzyG/QuestTweakaroo/blob/main/GitHub-Assets/I'm%20Not%20Intersted.png?raw=true)
 
 #### - No Names:
 > Removes the Artist/Mapper name from the Level Bar in the Pause Menu.
-
-![NNDemoImage](https://github.com/MillzyG/QuestTweakaroo/blob/main/GitHub-Assets/NoNames.png?raw=true)
+>
+> ![NNDemoImage](https://github.com/MillzyG/QuestTweakaroo/blob/main/GitHub-Assets/NoNames.png?raw=true)
 
 #### - RGB Menu
-> Allows you to change the colour of the text in the Main Menu.
+> Allows you to change the colour of the objects in the Menu Environment
+>
+> ![RGBMDemoImage](https://github.com/MillzyG/QuestTweakaroo/blob/main/GitHub-Assets/RGBMenu.png?raw=true)
 
 #### - Specific Haptics: (1.1.0)
 > Allows you to toggle haptics triggered by different events.
 
 #### - Void Menu Environment
-> Disables the Menu Environment to become a Void.
+> Disables the Menu Environment to become a Void. (Requires Restart)
+> 
+> ![VMEDemoImage](https://github.com/MillzyG/QuestTweakaroo/blob/main/GitHub-Assets/VoidMenu.png?raw=true)
 
 ## Developers
 * [MillzyG](https://github.com/MillzyG)
