@@ -44,44 +44,52 @@ Logger& getLogger() {
 }
 
 
-//RGB Menu
 MAKE_HOOK_OFFSETLESS(MainMenuViewController_DidActivate, void,
     GlobalNamespace::MainMenuViewController* self, bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling
 ) {
     MainMenuViewController_DidActivate(self, firstActivation, addedToHierarchy, screenSystemEnabling);
 
+        auto* solo_button = UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("SoloButton"));
+        auto* solo_text = solo_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
+
+        auto* campaign_button =  UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("CampaignButton"));
+        auto* campaign_text = campaign_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
+
+        auto* party_button =  UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("PartyButton"));
+        auto* party_text = party_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
+
+        auto* online_button =  UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("OnlineButton"));
+        auto* online_text = party_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
+
+        
 
     // RGB MENU
-    auto* solo_button = UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("SoloButton"));
-    auto* solo_text = solo_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
+    if (getConfig().config["color"] == true) {
 
-    auto* campaign_button =  UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("CampaignButton"));
-    auto* campaign_text = campaign_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
+        UnityEngine::Color solo_textColour = UnityEngine::Color(getConfig().config["soloR"].GetFloat(), getConfig().config["soloG"].GetFloat(), getConfig().config["soloB"].GetFloat(), 1);
+        UnityEngine::Color campaign_textColour = UnityEngine::Color(getConfig().config["campaignR"].GetFloat(), getConfig().config["campaignG"].GetFloat(), getConfig().config["campaignB"].GetFloat(), 1);
+        UnityEngine::Color party_textColour = UnityEngine::Color(getConfig().config["partyR"].GetFloat(), getConfig().config["partyG"].GetFloat(), getConfig().config["partyB"].GetFloat(), 1);
+        UnityEngine::Color online_textColour = UnityEngine::Color(getConfig().config["onlineR"].GetFloat(), getConfig().config["onlineG"].GetFloat(), getConfig().config["onlineB"].GetFloat(), 1);
 
-    auto* party_button =  UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("PartyButton"));
-    auto* party_text = party_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
+        solo_text->set_color(solo_textColour);
+        campaign_text->set_color(campaign_textColour);
+        party_text->set_color(party_textColour);
+        online_text->set_color(online_textColour);
 
-    auto* multiplayer_button =  UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("MultiplayerButton"));
-    auto* multiplayer_text = campaign_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
+    } else {
 
-    UnityEngine::Color solo_textColour = UnityEngine::Color(getConfig().config["textR"].GetFloat(), getConfig().config["textG"].GetFloat(), getConfig().config["textB"].GetFloat(), 1);
-    UnityEngine::Color campaign_textColour = UnityEngine::Color(getConfig().config["campaignR"].GetFloat(), getConfig().config["campaignG"].GetFloat(), getConfig().config["campaignB"].GetFloat(), 1);
-    UnityEngine::Color party_textColour = UnityEngine::Color(getConfig().config["partyR"].GetFloat(), getConfig().config["partyG"].GetFloat(), getConfig().config["partyB"].GetFloat(), 1);
-    UnityEngine::Color multiplayer_textColour = UnityEngine::Color(getConfig().config["multiplayerR"].GetFloat(), getConfig().config["multiplayerG"].GetFloat(), getConfig().config["multiplayerB"].GetFloat(), 1);
-
-    solo_text->set_color(solo_textColour);
-    campaign_text->set_color(campaign_textColour);
-    party_text->set_color(party_textColour);
-    multiplayer_text->set_color(multiplayer_textColour);
-
+        solo_text->set_color(UnityEngine::Color::get_white());
+        campaign_text->set_color(UnityEngine::Color::get_white());
+        party_text->set_color(UnityEngine::Color::get_white());
+        online_text->set_color(UnityEngine::Color::get_white());
+        
+    }
 
     // VOID MENU ENVIRONMENT
     if (getConfig().config["voidMenu"] == true ){
-        auto logo = UnityEngine::GameObject::Instantiate(UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("Logo")));
-
+        UnityEngine::GameObject::Instantiate(UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("Logo")));
         UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("MenuEnvironment"))->SetActive(false);
     }
-    
 }
 
 // I'm Not Interested
@@ -165,6 +173,19 @@ extern "C" void setup(ModInfo& info) {
     }
     if (!getConfig().config.HasMember("partyB")) {
         getConfig().config.AddMember("partyB", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    //online
+    if (!getConfig().config.HasMember("onlineR")) {
+        getConfig().config.AddMember("onlineR", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("onlineG")) {
+        getConfig().config.AddMember("onlineG", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("onlineB")) {
+        getConfig().config.AddMember("onlineB", rapidjson::Value(0).SetFloat(1), allocator);
         getConfig().Write();
     }
 

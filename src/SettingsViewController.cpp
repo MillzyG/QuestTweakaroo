@@ -26,7 +26,7 @@ UnityEngine::Vector3 menuPos;
 UnityEngine::GameObject* soloPicker;
 UnityEngine::GameObject* campaignPicker;
 UnityEngine::GameObject* partyPicker;
-UnityEngine::GameObject* multiplayerPicker;
+UnityEngine::GameObject* onlinePicker;
 UnityEngine::UI::Toggle* promoToggle;
 UnityEngine::UI::Toggle* nameToggle;
 UnityEngine::UI::Toggle* colorToggle;
@@ -74,6 +74,8 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
         colorToggle = BeatSaberUI::CreateToggle(container->get_transform(), "Override Menu Text Colors", getConfig().config["color"].GetBool(), 
             [](bool value){
                 getConfig().config["color"].SetBool(value);
+
+                getConfig().Write();
             }
         );
 
@@ -99,7 +101,14 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
                 getConfig().config["partyR"].SetFloat(color.r);
                 getConfig().config["partyG"].SetFloat(color.g);
                 getConfig().config["partyB"].SetFloat(color.b);
-
+            }
+        );
+        //online
+        onlinePicker = BeatSaberUI::CreateColorPicker(container->get_transform(), "Online Text", UnityEngine::Color(getConfig().config["onlineR"].GetFloat(), getConfig().config["onlineR"].GetFloat(), getConfig().config["onlineR"].GetFloat(), 1), 
+            [](UnityEngine::Color color, GlobalNamespace::ColorChangeUIEventType evnetType){
+                getConfig().config["onlineR"].SetFloat(color.r);
+                getConfig().config["onlineG"].SetFloat(color.g);
+                getConfig().config["onlineB"].SetFloat(color.b);
             }
         );
 
