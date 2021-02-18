@@ -35,7 +35,7 @@ UnityEngine::Vector3 menuPos;
 UnityEngine::GameObject* soloPicker;
 UnityEngine::GameObject* campaignPicker;
 UnityEngine::GameObject* partyPicker;
-UnityEngine::GameObject* multiplayerPicker;
+UnityEngine::GameObject* onlinePicker;
 UnityEngine::GameObject* leftPicker;
 UnityEngine::GameObject* rightPicker;
 UnityEngine::UI::Toggle* promoToggle;
@@ -100,6 +100,8 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
                 else{
                     colorMng->SetColors(UnityEngine::Color(getConfig().config["leftR"].GetFloat(), getConfig().config["leftG"].GetFloat(), getConfig().config["leftB"].GetFloat(), 1), UnityEngine::Color(getConfig().config["rightR"].GetFloat(), getConfig().config["rightG"].GetFloat(), getConfig().config["rightB"].GetFloat(), 1));
                 }
+
+                getConfig().Write();
             }
         );
 
