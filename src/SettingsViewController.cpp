@@ -1,4 +1,5 @@
 #include "SettingsViewContoller.hpp"
+#include "ColorManager.hpp"
 #include "main.hpp"
 
 #include "questui/shared/BeatSaberUI.hpp"
@@ -12,7 +13,15 @@ using namespace QuestUI;
 #include "UnityEngine/UI/VerticalLayoutGroup.hpp"
 #include "UnityEngine/UI/Toggle.hpp"
 #include "UnityEngine/UI/Image.hpp"
+#include "UnityEngine/SpriteRenderer.hpp"
+#include "UnityEngine/MeshRenderer.hpp"
+#include "UnityEngine/Material.hpp"
+#include "UnityEngine/Random.hpp"
+using namespace UnityEngine;
 
+#include "GlobalNamespace/TubeBloomPrePassLight.hpp"
+#include "GlobalNamespace/FlickeringNeonSign.hpp"
+using namespace GlobalNamespace;
 
 
 DEFINE_CLASS(Tweakaroo::SettingsViewController);
@@ -27,13 +36,24 @@ UnityEngine::GameObject* soloPicker;
 UnityEngine::GameObject* campaignPicker;
 UnityEngine::GameObject* partyPicker;
 UnityEngine::GameObject* multiplayerPicker;
+UnityEngine::GameObject* leftPicker;
+UnityEngine::GameObject* rightPicker;
 UnityEngine::UI::Toggle* promoToggle;
 UnityEngine::UI::Toggle* nameToggle;
 UnityEngine::UI::Toggle* colorToggle;
 UnityEngine::UI::Toggle* voidMenuToggle;
 
+UnityEngine::Color leftDefault;
+UnityEngine::Color rightDefault;
+Tweakaroo::ColorManager* colorMng;
+
 void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling){
     if(firstActivation){
+        leftDefault = UnityEngine::Color(1, 0.03F, 0.03F, 1);
+        rightDefault = UnityEngine::Color(0, 0.6F, 1, 1);
+        colorMng = UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("ColorManager"))->GetComponent<Tweakaroo::ColorManager*>();
+
+
         //Create scrollable container for settings
         container = BeatSaberUI::CreateScrollableSettingsContainer(get_transform());
 
@@ -71,35 +91,39 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
         rgbmenu_separator->set_color(UnityEngine::Color::get_gray());
         rgbmenu_separator->set_fontStyle(TMPro::FontStyles::Underline);
 
-        colorToggle = BeatSaberUI::CreateToggle(container->get_transform(), "Override Menu Text Colors", getConfig().config["color"].GetBool(), 
+        colorToggle = BeatSaberUI::CreateToggle(container->get_transform(), "Override Menu Colors", getConfig().config["color"].GetBool(), 
             [](bool value){
                 getConfig().config["color"].SetBool(value);
+                if(!value){
+                    colorMng->SetColors(leftDefault, rightDefault);
+                }
+                else{
+                    colorMng->SetColors(UnityEngine::Color(getConfig().config["leftR"].GetFloat(), getConfig().config["leftG"].GetFloat(), getConfig().config["leftB"].GetFloat(), 1), UnityEngine::Color(getConfig().config["rightR"].GetFloat(), getConfig().config["rightG"].GetFloat(), getConfig().config["rightB"].GetFloat(), 1));
+                }
             }
         );
 
-        //solo
-        soloPicker = BeatSaberUI::CreateColorPicker(container->get_transform(), "Solo Text", UnityEngine::Color(getConfig().config["soloR"].GetFloat(), getConfig().config["soloR"].GetFloat(), getConfig().config["soloR"].GetFloat(), 1), 
+        //Custom menu colors
+        leftPicker = BeatSaberUI::CreateColorPicker(container->get_transform(), "Left", UnityEngine::Color(getConfig().config["leftR"].GetFloat(), getConfig().config["leftG"].GetFloat(), getConfig().config["leftB"].GetFloat(), 1), 
             [](UnityEngine::Color color, GlobalNamespace::ColorChangeUIEventType evnetType){
-                getConfig().config["soloR"].SetFloat(color.r);
-                getConfig().config["soloG"].SetFloat(color.g);
-                getConfig().config["soloB"].SetFloat(color.b);
-            }
-        );
-        //campaign
-        campaignPicker = BeatSaberUI::CreateColorPicker(container->get_transform(), "Campaign Text", UnityEngine::Color(getConfig().config["campaignR"].GetFloat(), getConfig().config["campaignR"].GetFloat(), getConfig().config["campaignR"].GetFloat(), 1), 
-            [](UnityEngine::Color color, GlobalNamespace::ColorChangeUIEventType evnetType){
-                getConfig().config["campaignR"].SetFloat(color.r);
-                getConfig().config["campaignG"].SetFloat(color.g);
-                getConfig().config["campaignB"].SetFloat(color.b);
-            }
-        );
-        //party
-        partyPicker = BeatSaberUI::CreateColorPicker(container->get_transform(), "Party Text", UnityEngine::Color(getConfig().config["partyR"].GetFloat(), getConfig().config["partyR"].GetFloat(), getConfig().config["partyR"].GetFloat(), 1), 
-            [](UnityEngine::Color color, GlobalNamespace::ColorChangeUIEventType evnetType){
-                getConfig().config["partyR"].SetFloat(color.r);
-                getConfig().config["partyG"].SetFloat(color.g);
-                getConfig().config["partyB"].SetFloat(color.b);
+                if(getConfig().config["color"].GetBool()){
+                    getConfig().config["leftR"].SetFloat(color.r);
+                    getConfig().config["leftG"].SetFloat(color.g);
+                    getConfig().config["leftB"].SetFloat(color.b);
 
+                    colorMng->SetColors(color, UnityEngine::Color(getConfig().config["rightR"].GetFloat(), getConfig().config["rightG"].GetFloat(), getConfig().config["rightB"].GetFloat(), 1));
+                }
+            }
+        );
+        rightPicker = BeatSaberUI::CreateColorPicker(container->get_transform(), "Right", UnityEngine::Color(getConfig().config["rightR"].GetFloat(), getConfig().config["rightG"].GetFloat(), getConfig().config["rightB"].GetFloat(), 1), 
+            [](UnityEngine::Color color, GlobalNamespace::ColorChangeUIEventType evnetType){
+                if(getConfig().config["color"].GetBool()){
+                    getConfig().config["rightR"].SetFloat(color.r);
+                    getConfig().config["rightG"].SetFloat(color.g);
+                    getConfig().config["rightB"].SetFloat(color.b);
+
+                    colorMng->SetColors(UnityEngine::Color(getConfig().config["leftR"].GetFloat(), getConfig().config["leftG"].GetFloat(), getConfig().config["leftB"].GetFloat(), 1), color);
+                }
             }
         );
 
@@ -115,7 +139,7 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
                 getConfig().config["voidMenu"].SetBool(value);
             }
         );  
-        
+
     }
 }
 

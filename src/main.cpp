@@ -4,6 +4,10 @@
 #include "GlobalNamespace/PauseMenuManager.hpp"
 #include "GlobalNamespace/LevelBar.hpp"
 #include "GlobalNamespace/MainMenuViewController.hpp"
+#include "GlobalNamespace/HealthWarningFlowCoordinator.hpp"
+#include "GlobalNamespace/TubeBloomPrePassLight.hpp"
+#include "GlobalNamespace/FlickeringNeonSign.hpp"
+using namespace GlobalNamespace;
 
 #include "TMPro/TextMeshProUGUI.hpp"
 #include "HMUI/CurvedTextMeshPro.hpp"
@@ -16,7 +20,13 @@
 #include "HMUI/ViewController_AnimationType.hpp"
 
 #include "UnityEngine/GameObject.hpp"
+#include "UnityEngine/Material.hpp"
 #include "UnityEngine/SceneManagement/SceneManager.hpp"
+#include "UnityEngine/Color.hpp"
+#include "UnityEngine/MeshRenderer.hpp"
+#include "UnityEngine/SpriteRenderer.hpp"
+#include "UnityEngine/Random.hpp"
+using namespace UnityEngine;
 
 #include "beatsaber-hook/shared/utils/il2cpp-utils.hpp"
 #include "beatsaber-hook/shared/utils/utils.h"
@@ -24,11 +34,11 @@
 #include "questui/shared/QuestUI.hpp"
 #include "custom-types/shared/register.hpp"
 #include "SettingsViewContoller.hpp"
-
+#include "ColorManager.hpp"
 
 static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
 
-
+Tweakaroo::ColorManager* colorManager;
 
 // Loads the config from disk using our modInfo, then returns it for use
 Configuration& getConfig() {
@@ -61,13 +71,13 @@ MAKE_HOOK_OFFSETLESS(MainMenuViewController_DidActivate, void,
     auto* party_button =  UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("PartyButton"));
     auto* party_text = party_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
 
-    auto* multiplayer_button =  UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("MultiplayerButton"));
+    auto* multiplayer_button =  UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("OnlineButton"));
     auto* multiplayer_text = campaign_button->get_gameObject()->GetComponentInChildren<TMPro::TextMeshProUGUI*>();
 
-    UnityEngine::Color solo_textColour = UnityEngine::Color(getConfig().config["textR"].GetFloat(), getConfig().config["textG"].GetFloat(), getConfig().config["textB"].GetFloat(), 1);
-    UnityEngine::Color campaign_textColour = UnityEngine::Color(getConfig().config["campaignR"].GetFloat(), getConfig().config["campaignG"].GetFloat(), getConfig().config["campaignB"].GetFloat(), 1);
-    UnityEngine::Color party_textColour = UnityEngine::Color(getConfig().config["partyR"].GetFloat(), getConfig().config["partyG"].GetFloat(), getConfig().config["partyB"].GetFloat(), 1);
-    UnityEngine::Color multiplayer_textColour = UnityEngine::Color(getConfig().config["multiplayerR"].GetFloat(), getConfig().config["multiplayerG"].GetFloat(), getConfig().config["multiplayerB"].GetFloat(), 1);
+    UnityEngine::Color solo_textColour = UnityEngine::Color(getConfig().config["leftR"].GetFloat(), getConfig().config["leftG"].GetFloat(), getConfig().config["leftB"].GetFloat(), 1);
+    UnityEngine::Color campaign_textColour = UnityEngine::Color(getConfig().config["rightR"].GetFloat(), getConfig().config["rightG"].GetFloat(), getConfig().config["rightB"].GetFloat(), 1);
+    UnityEngine::Color party_textColour = UnityEngine::Color(getConfig().config["leftR"].GetFloat(), getConfig().config["leftG"].GetFloat(), getConfig().config["leftB"].GetFloat(), 1);
+    UnityEngine::Color multiplayer_textColour = UnityEngine::Color(getConfig().config["rightR"].GetFloat(), getConfig().config["rightG"].GetFloat(), getConfig().config["rightB"].GetFloat(), 1);
 
     solo_text->set_color(solo_textColour);
     campaign_text->set_color(campaign_textColour);
@@ -81,7 +91,8 @@ MAKE_HOOK_OFFSETLESS(MainMenuViewController_DidActivate, void,
 
         UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("MenuEnvironment"))->SetActive(false);
     }
-    
+
+    colorManager = UnityEngine::GameObject::New_ctor(il2cpp_utils::createcsstr("ColorManager"))->AddComponent<Tweakaroo::ColorManager*>();
 }
 
 // I'm Not Interested
@@ -174,6 +185,31 @@ extern "C" void setup(ModInfo& info) {
         getConfig().Write();
     }
 
+    //Color menu
+    if (!getConfig().config.HasMember("leftR")) {
+        getConfig().config.AddMember("leftR", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("leftG")) {
+        getConfig().config.AddMember("leftG", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("leftB")) {
+        getConfig().config.AddMember("leftB", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("rightR")) {
+        getConfig().config.AddMember("rightR", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("rightG")) {
+        getConfig().config.AddMember("rightG", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("rightB")) {
+        getConfig().config.AddMember("rightB", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
 }
 
 // Called later on in the game loading - a good time to install function hooks
@@ -186,6 +222,7 @@ extern "C" void load() {
 
     getLogger().info("Installing hooks...");
     // Install our hooks (none defined yet)
+    custom_types::Register::RegisterType<Tweakaroo::ColorManager>();
     custom_types::Register::RegisterType<Tweakaroo::SettingsViewController>();
     QuestUI::Register::RegisterModSettingsViewController<Tweakaroo::SettingsViewController*>(modInfo);
     getLogger().info("Installed all hooks!");
