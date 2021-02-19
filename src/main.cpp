@@ -1,5 +1,7 @@
 #include "main.hpp"
 
+#include <map>
+
 #include "GlobalNamespace/PromoViewController.hpp"
 #include "GlobalNamespace/PauseMenuManager.hpp"
 #include "GlobalNamespace/LevelBar.hpp"
@@ -14,6 +16,10 @@ using namespace GlobalNamespace;
 #include "HMUI/ViewController.hpp"
 #include "HMUI/ViewController_AnimationType.hpp"
 
+#include "Polyglot/Localization.hpp"
+
+#include "Images.hpp"
+
 #include "TMPro/TextMeshProUGUI.hpp"
 #include "HMUI/CurvedTextMeshPro.hpp"
 #include "HMUI/ViewController.hpp"
@@ -23,9 +29,15 @@ using namespace GlobalNamespace;
 #include "UnityEngine/Material.hpp"
 #include "UnityEngine/SceneManagement/SceneManager.hpp"
 #include "UnityEngine/Color.hpp"
+#include "UnityEngine/Color32.hpp"
+#include "UnityEngine/UI/Outline.hpp"
 #include "UnityEngine/MeshRenderer.hpp"
 #include "UnityEngine/SpriteRenderer.hpp"
+#include "UnityEngine/Shader.hpp"
 #include "UnityEngine/Random.hpp"
+#include "UnityEngine/PrimitiveType.hpp"
+#include "UnityEngine/Transform.hpp"
+#include "UnityEngine/Texture.hpp"
 using namespace UnityEngine;
 
 #include "beatsaber-hook/shared/utils/il2cpp-utils.hpp"
@@ -35,6 +47,7 @@ using namespace UnityEngine;
 #include "custom-types/shared/register.hpp"
 #include "SettingsViewContoller.hpp"
 #include "ColorManager.hpp"
+#include "questui/shared/BeatSaberUI.hpp"
 
 static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
 
@@ -89,7 +102,7 @@ MAKE_HOOK_OFFSETLESS(MainMenuViewController_DidActivate, void,
     } else {
 
         solo_text->set_color(UnityEngine::Color::get_white());
-        campaign_text->set_color(UnityEngine::Color::get_white());
+        campaign_text->set_color(UnityEngine::Color());
         party_text->set_color(UnityEngine::Color::get_white());
         online_text->set_color(UnityEngine::Color::get_white());
 
@@ -98,10 +111,23 @@ MAKE_HOOK_OFFSETLESS(MainMenuViewController_DidActivate, void,
     // VOID MENU ENVIRONMENT
     if (getConfig().config["voidMenu"] == true && firstActivation){
         UnityEngine::GameObject::Instantiate(UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("Logo")));
+
+        UnityEngine::GameObject* plane = UnityEngine::GameObject::CreatePrimitive(UnityEngine::PrimitiveType::Plane);
+        plane->get_transform()->set_localScale(UnityEngine::Vector3(0.5, 1, 0.5));
+
+        auto planeRenderer = plane->GetComponent<UnityEngine::Renderer*>();
+        auto matr = UnityEngine::Material::New_ctor(UnityEngine::Shader::Find(il2cpp_utils::createcsstr("Custom/SimpleLit")));
+        planeRenderer->set_material(matr);
+        
+        planeRenderer->get_material()->set_color(UnityEngine::Color(0, 0, 0.6, 1));
+        planeRenderer->get_material()->set_name(il2cpp_utils::createcsstr("Platform"));
+
+        auto platformTxtrSprite = QuestUI::BeatSaberUI::Base64ToSprite(platformPlane, 1, 1);
+
         UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("MenuEnvironment"))->SetActive(false);
     }
 
-    if(!getConfig().config["voidMenu"].GetBool() && UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("MenuEnvironment"))->get_activeSelf()){
+    if(!getConfig().config["voidMenu"].GetBool() && firstActivation){
         colorManager = UnityEngine::GameObject::New_ctor(il2cpp_utils::createcsstr("ColorManager"))->AddComponent<Tweakaroo::ColorManager*>();
     }
 }
@@ -126,6 +152,10 @@ MAKE_HOOK_OFFSETLESS(PauseMenuManager_ShowMenu, void,
         self->levelBar->authorNameText->get_gameObject()->SetActive(false);
     }
 }
+
+std::map<std::string, std::string> labelMap {
+
+};
 
 // Called at the early stages of game loading
 extern "C" void setup(ModInfo& info) {
