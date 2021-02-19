@@ -51,7 +51,7 @@ void Tweakaroo::ColorManager::Start(){
         this->SetColors(UnityEngine::Color(getConfig().config["leftR"].GetFloat(), getConfig().config["leftG"].GetFloat(), getConfig().config["leftB"].GetFloat(), 1), UnityEngine::Color(getConfig().config["rightR"].GetFloat(), getConfig().config["rightG"].GetFloat(), getConfig().config["rightB"].GetFloat(), 1));
     }
     else{
-        this->SetColors(UnityEngine::Color(1, 0.03F, 0.03F, 1), UnityEngine::Color(0, 0.6F, 1, 1));
+        this->SetColors(UnityEngine::Color::get_gray(), UnityEngine::Color::get_gray());
     }
 }
 
