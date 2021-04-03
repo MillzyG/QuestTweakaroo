@@ -3,8 +3,8 @@
   "dependenciesDir": "extern",
   "info": {
     "name": "Tweakaroo",
-    "id": "Tweakaroo",
-    "version": "1.0.0",
+    "id": "tweakaroo",
+    "version": "1.1.0",
     "url": null,
     "additionalData": {}
   },

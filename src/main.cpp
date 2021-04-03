@@ -18,8 +18,6 @@ using namespace GlobalNamespace;
 
 #include "Polyglot/Localization.hpp"
 
-#include "Images.hpp"
-
 #include "TMPro/TextMeshProUGUI.hpp"
 #include "HMUI/CurvedTextMeshPro.hpp"
 #include "HMUI/ViewController.hpp"
@@ -87,44 +85,52 @@ MAKE_HOOK_OFFSETLESS(MainMenuViewController_DidActivate, void,
         
 
     // RGB MENU
-    if (getConfig().config["color"] == true) {
+    switch (getConfig().config["overrideType"].GetInt()) {
+        case 3:
+        case 5:
+        case 6:
+        case 0:
+            if (getConfig().config["color"] == true) {
 
-        UnityEngine::Color solo_textColour = UnityEngine::Color(getConfig().config["leftR"].GetFloat(), getConfig().config["leftG"].GetFloat(), getConfig().config["leftB"].GetFloat(), 1);
-        UnityEngine::Color campaign_textColour = UnityEngine::Color(getConfig().config["rightR"].GetFloat(), getConfig().config["rightG"].GetFloat(), getConfig().config["rightB"].GetFloat(), 1);
-        UnityEngine::Color party_textColour = UnityEngine::Color(getConfig().config["leftR"].GetFloat(), getConfig().config["leftG"].GetFloat(), getConfig().config["leftB"].GetFloat(), 1);
-        UnityEngine::Color online_textColour = UnityEngine::Color(getConfig().config["rightR"].GetFloat(), getConfig().config["rightG"].GetFloat(), getConfig().config["rightB"].GetFloat(), 1);
+                UnityEngine::Color solo_textColour = UnityEngine::Color(getConfig().config["leftR"].GetFloat(), getConfig().config["leftG"].GetFloat(), getConfig().config["leftB"].GetFloat(), 1);
+                UnityEngine::Color campaign_textColour = UnityEngine::Color(getConfig().config["rightR"].GetFloat(), getConfig().config["rightG"].GetFloat(), getConfig().config["rightB"].GetFloat(), 1);
+                UnityEngine::Color party_textColour = UnityEngine::Color(getConfig().config["leftR"].GetFloat(), getConfig().config["leftG"].GetFloat(), getConfig().config["leftB"].GetFloat(), 1);
+                UnityEngine::Color online_textColour = UnityEngine::Color(getConfig().config["rightR"].GetFloat(), getConfig().config["rightG"].GetFloat(), getConfig().config["rightB"].GetFloat(), 1);
 
-        solo_text->set_color(solo_textColour);
-        campaign_text->set_color(campaign_textColour);
-        party_text->set_color(party_textColour);
-        online_text->set_color(online_textColour);
+        
 
-    } else {
+                solo_text->set_color(solo_textColour);
+                campaign_text->set_color(campaign_textColour);
+                party_text->set_color(party_textColour);
+                online_text->set_color(online_textColour);
 
-        solo_text->set_color(UnityEngine::Color::get_white());
-        campaign_text->set_color(UnityEngine::Color());
-        party_text->set_color(UnityEngine::Color::get_white());
-        online_text->set_color(UnityEngine::Color::get_white());
+            } else {
 
+                solo_text->set_color(UnityEngine::Color::get_white());
+                campaign_text->set_color(UnityEngine::Color());
+                party_text->set_color(UnityEngine::Color::get_white());
+                online_text->set_color(UnityEngine::Color::get_white());
+
+            }
+        break;
     }
 
     // VOID MENU ENVIRONMENT
     if (getConfig().config["voidMenu"] == true && firstActivation){
         UnityEngine::GameObject::Instantiate(UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("Logo")));
-
-        UnityEngine::GameObject* plane = UnityEngine::GameObject::CreatePrimitive(UnityEngine::PrimitiveType::Plane);
-        plane->get_transform()->set_localScale(UnityEngine::Vector3(0.5, 1, 0.5));
-
-        auto planeRenderer = plane->GetComponent<UnityEngine::Renderer*>();
-        auto matr = UnityEngine::Material::New_ctor(UnityEngine::Shader::Find(il2cpp_utils::createcsstr("Custom/SimpleLit")));
-        planeRenderer->set_material(matr);
-        
-        planeRenderer->get_material()->set_color(UnityEngine::Color(0, 0, 0.6, 1));
-        planeRenderer->get_material()->set_name(il2cpp_utils::createcsstr("Platform"));
-
-        auto platformTxtrSprite = QuestUI::BeatSaberUI::Base64ToSprite(platformPlane, 1, 1);
-
         UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("MenuEnvironment"))->SetActive(false);
+        
+        /*if (getConfig().config["voidAntiAcrophobia"] == true) {
+            UnityEngine::GameObject* plane = UnityEngine::GameObject::CreatePrimitive(UnityEngine::PrimitiveType::Plane);
+            plane->get_transform()->set_localScale(UnityEngine::Vector3(0.5, 1, 0.5));
+
+            auto planeRenderer = plane->GetComponent<UnityEngine::Renderer*>();
+            auto matr = UnityEngine::Material::New_ctor(UnityEngine::Shader::Find(il2cpp_utils::createcsstr("Custom/SimpleLit")));
+            planeRenderer->set_material(matr);
+        
+            planeRenderer->get_material()->set_color(UnityEngine::Color(0, 0, 0.6, 1));
+            planeRenderer->get_material()->set_name(il2cpp_utils::createcsstr("AntiAcrophobiaPlane"));
+        }*/
     }
 
     if(!getConfig().config["voidMenu"].GetBool() && firstActivation){
@@ -152,10 +158,6 @@ MAKE_HOOK_OFFSETLESS(PauseMenuManager_ShowMenu, void,
         self->levelBar->authorNameText->get_gameObject()->SetActive(false);
     }
 }
-
-std::map<std::string, std::string> labelMap {
-
-};
 
 // Called at the early stages of game loading
 extern "C" void setup(ModInfo& info) {
@@ -237,6 +239,22 @@ extern "C" void setup(ModInfo& info) {
     if (!getConfig().config.HasMember("voidMenu")) {
         getConfig().config.AddMember("voidMenu", rapidjson::Value(0).SetBool(false), allocator);
         getConfig().Write();
+    } 
+    if (!getConfig().config.HasMember("voidAntiAcrophobia")) {
+        getConfig().config.AddMember("voidAntiAcrophobia", rapidjson::Value(0).SetBool(false), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("voidAntiAcrophobiaPickerR")) {
+        getConfig().config.AddMember("voidAntiAcrophobiaPickerR", rapidjson::Value(0).SetFloat(0.1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("voidAntiAcrophobiaPickerG")) {
+        getConfig().config.AddMember("voidAntiAcrophobiaPickerG", rapidjson::Value(0).SetFloat(0.1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("voidAntiAcrophobiaPickerB")) {
+        getConfig().config.AddMember("voidAntiAcrophobiaPickerB", rapidjson::Value(0).SetFloat(0.1), allocator);
+        getConfig().Write();
     }
 
     //Color menu
@@ -262,6 +280,18 @@ extern "C" void setup(ModInfo& info) {
     }
     if (!getConfig().config.HasMember("rightB")) {
         getConfig().config.AddMember("rightB", rapidjson::Value(0).SetFloat(1), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("rightHex")) {
+        getConfig().config.AddMember("rightHex", rapidjson::Value(0).SetString("ffffff"), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("leftHex")) {
+        getConfig().config.AddMember("leftHex", rapidjson::Value(0).SetString("ffffff"), allocator);
+        getConfig().Write();
+    }
+    if (!getConfig().config.HasMember("overrideType")) {
+        getConfig().config.AddMember("overrideType", rapidjson::Value(0).SetInt(0), allocator);
         getConfig().Write();
     }
 }

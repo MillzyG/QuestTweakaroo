@@ -1,22 +1,22 @@
 {
-  "id": "Tweakaroo",
+  "id": "dev.millzyg.tweakaroo-bs",
   "name": "Tweakaroo",
-  "version": "1.0.0",
-  "author": "MillzyG#3664",
+  "version": "1.1.0",
+  "author": ["MillzyG", "BoopetyDoopety"],
   "description": [
-    "A Mod that adds some tweaks to \"Optimize\" experience"
+    "Tweakaroo is a \"compilation\" of minor changes/modifications to the game."
   ],
   "category": "Gameplay",
-  "gameVersion": "1.13.2",
+  "gameVersion": "1.14.0",
   "platform": "Quest",
   "components": [
     {
       "type": "HookMod",
       "installAction": {
-        "installLibraryFile": "libTweakaroo.so"
+        "installLibraryFile": "libdev.millzyg.tweakaroo-bs.so"
       },
       "uninstallAction": {
-        "removeLibraryFile": "libTweakaroo.so"
+        "removeLibraryFile": "libdev.millzyg.tweakaroo-bs.so"
       }
     },
     {

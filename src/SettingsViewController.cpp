@@ -1,3 +1,4 @@
+
 #include "SettingsViewContoller.hpp"
 #include "ColorManager.hpp"
 #include "main.hpp"
@@ -38,10 +39,12 @@ UnityEngine::GameObject* partyPicker;
 UnityEngine::GameObject* onlinePicker;
 UnityEngine::GameObject* leftPicker;
 UnityEngine::GameObject* rightPicker;
+UnityEngine::GameObject* voidAntiAcrophobiaPicker;
 UnityEngine::UI::Toggle* promoToggle;
 UnityEngine::UI::Toggle* nameToggle;
 UnityEngine::UI::Toggle* colorToggle;
 UnityEngine::UI::Toggle* voidMenuToggle;
+UnityEngine::UI::Toggle* voidAntiAcrophobia;
 
 UnityEngine::Color leftDefault;
 UnityEngine::Color rightDefault;
@@ -94,6 +97,21 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
         colorToggle = BeatSaberUI::CreateToggle(container->get_transform(), "Override Menu Colors", getConfig().config["color"].GetBool(), 
             [](bool value){
                 getConfig().config["color"].SetBool(value);
+
+                if (!value || !getConfig().config["color"].GetBool()) {
+                    leftPicker->GetComponent<ExternalComponents*>()->Get<RectTransform*>()->get_gameObject()->SetActive(false);
+                    leftPicker->get_transform()->GetParent()->get_gameObject()->SetActive(false);
+
+                    rightPicker->GetComponent<ExternalComponents*>()->Get<RectTransform*>()->get_gameObject()->SetActive(false);
+                    rightPicker->get_transform()->GetParent()->get_gameObject()->SetActive(false);
+                } else {
+                    leftPicker->GetComponent<ExternalComponents*>()->Get<RectTransform*>()->get_gameObject()->SetActive(true);
+                    leftPicker->get_transform()->GetParent()->get_gameObject()->SetActive(true);
+
+                    rightPicker->GetComponent<ExternalComponents*>()->Get<RectTransform*>()->get_gameObject()->SetActive(true);
+                    rightPicker->get_transform()->GetParent()->get_gameObject()->SetActive(true);
+                }
+
                 if(!getConfig().config["voidMenu"].GetBool() && UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("MenuEnvironment"))->get_activeSelf()){
                     colorMng = UnityEngine::GameObject::Find(il2cpp_utils::createcsstr("ColorManager"))->GetComponent<Tweakaroo::ColorManager*>();
                     if(!value){
@@ -148,8 +166,38 @@ void Tweakaroo::SettingsViewController::DidActivate(bool firstActivation, bool a
         voidMenuToggle = BeatSaberUI::CreateToggle(container->get_transform(), "Void Menu", getConfig().config["voidMenu"].GetBool(),
             [](bool value) {
                 getConfig().config["voidMenu"].SetBool(value);
+
+                if (!value || !getConfig().config["voidMenu"].GetBool()) {
+                    voidAntiAcrophobia->get_transform()->GetParent()->get_gameObject()->SetActive(false);
+                }
+                else {
+                    voidAntiAcrophobia->get_transform()->GetParent()->get_gameObject()->SetActive(true);
+                }
+
+                getConfig().Write();
             }
-        );  
+        ); 
+
+        voidAntiAcrophobia = BeatSaberUI::CreateToggle(container->get_transform(), "Enable Anti-Acrophobia", getConfig().config["voidAntiAcrophobia"].GetBool(), 
+            [](bool value) {
+                getConfig().config["voidAntiAcrophobia"].SetBool(value);
+                
+                if (!value || !getConfig().config["voidAntiAcrophobia"].GetBool()) {
+                    voidAntiAcrophobiaPicker->get_transform()->GetParent()->get_gameObject()->SetActive(false);
+                }
+                else {
+                    voidAntiAcrophobiaPicker->get_transform()->GetParent()->get_gameObject()->SetActive(true);
+                }
+
+                getConfig().Write();
+            }
+        );
+
+        voidAntiAcrophobiaPicker = BeatSaberUI::CreateColorPicker(container->get_transform(), "Anti-Acrophobia Plane", UnityEngine::Color(getConfig().config["voidAntiAcrophobiaPickerR"].GetFloat(), getConfig().config["voidAntiAcrophobiaPickerG"].GetFloat(), getConfig().config["voidAntiAcrophobiaPickerB"].GetFloat(), 1),
+            [](UnityEngine::Color color, GlobalNamespace::ColorChangeUIEventType evnetType) {
+
+            }
+        );
 
     }
 }
