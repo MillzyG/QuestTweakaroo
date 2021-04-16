@@ -1,0 +1,18 @@
+
+{
+    "_QPVersion": "2.0.0",
+    "name": "Tweakaroo",
+    "id": "Tweakaroo",
+    "description": "Tweakaroo is a \"compilation\" of minor changes/modifications to Beat Saber.",
+    "author": "MillzyG, BoopetyDoopety",
+    "version": "2.0.0",
+    "packageId": "com.beatgames.beatsaber",
+    "packageVersion": "1.14.0",
+    "type": "Other",
+    "modFiles": [
+        "libTweakaroo.so"
+    ],
+    "libraryFiles": [
+        "libbeatsaber-hook_1_3_0.so"
+    ]
+}
