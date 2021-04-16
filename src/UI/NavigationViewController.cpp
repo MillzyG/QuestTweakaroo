@@ -54,7 +54,7 @@ void Tweakaroo::NavigationViewController::DidActivate(bool firstActivation, bool
 
     noNames = BeatSaberUI::CreateUIButton(navContainer->get_transform(), "No Names",
         []() {
-
+            Tweakaroo::MainSettingsConfig::noNamesConfig();
         }
     );
 

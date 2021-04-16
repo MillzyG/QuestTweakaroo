@@ -61,6 +61,19 @@ void Tweakaroo::MainSettingsConfig::noPromoConfig() {
     applyStyling();
 }
 
+void Tweakaroo::MainSettingsConfig::noNamesConfig() {
+    resetView();
+
+    mainTitle = BeatSaberUI::CreateText(mainContainer->get_transform(), "No Names");
+    mainDescription = BeatSaberUI::CreateText(mainContainer->get_transform(), "Removes the Author Name Text from the level bar in the pause menu.");
+
+    toggle1 = BeatSaberUI::CreateToggle(mainContainer->get_transform(), "Enable No Names", getConfig().config["noNamesEnabled"].GetBool(),
+        [](bool value) {
+            getConfig().config["noNamesEnabled"].SetBool(value);
+        }
+    );
+}
+
 void Tweakaroo::MainSettingsViewController::DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling) {
     if (!firstActivation) return;
 
