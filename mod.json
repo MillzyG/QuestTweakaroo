@@ -7,7 +7,7 @@
     "author": "MillzyG, BoopetyDoopety",
     "version": "2.0.0",
     "packageId": "com.beatgames.beatsaber",
-    "packageVersion": "1.14.0",
+    "packageVersion": "1.15.0",
     "type": "Other",
     "modFiles": [
         "libTweakaroo.so"

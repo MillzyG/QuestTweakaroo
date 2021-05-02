@@ -40,11 +40,6 @@ void Tweakaroo::NavigationViewController::DidActivate(bool firstActivation, bool
     navTitle->set_fontSize(6.0f);
     navTitle->set_alignment(TextAlignmentOptions::Midline);
 
-    energyPercentage = BeatSaberUI::CreateUIButton(navContainer->get_transform(), "Energy Percentage",
-        []() {
-
-        }
-    );
 
     noPromo = BeatSaberUI::CreateUIButton(navContainer->get_transform(), "No Promo",
         []() {
@@ -66,7 +61,7 @@ void Tweakaroo::NavigationViewController::DidActivate(bool firstActivation, bool
 
     voidMenuEnv = BeatSaberUI::CreateUIButton(navContainer->get_transform(), "Void Menu Env", 
         []() {
-
+            Tweakaroo::MainSettingsConfig::voidMenuEnvConfig();
         }
     );
 }

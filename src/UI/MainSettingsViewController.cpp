@@ -65,13 +65,30 @@ void Tweakaroo::MainSettingsConfig::noNamesConfig() {
     resetView();
 
     mainTitle = BeatSaberUI::CreateText(mainContainer->get_transform(), "No Names");
-    mainDescription = BeatSaberUI::CreateText(mainContainer->get_transform(), "Removes the Author Name Text from the level bar in the pause menu.");
+    mainDescription = BeatSaberUI::CreateText(mainContainer->get_transform(), "Removes the Author Name Text from\nthe level bar in the pause menu.");
 
     toggle1 = BeatSaberUI::CreateToggle(mainContainer->get_transform(), "Enable No Names", getConfig().config["noNamesEnabled"].GetBool(),
         [](bool value) {
             getConfig().config["noNamesEnabled"].SetBool(value);
         }
     );
+
+    applyStyling();
+}
+
+void Tweakaroo::MainSettingsConfig::voidMenuEnvConfig() {
+    resetView();
+
+    mainTitle = BeatSaberUI::CreateText(mainContainer->get_transform(), "Void Menu Env");
+    mainDescription = BeatSaberUI::CreateText(mainContainer->get_transform(), "Deactivates the Menu Environment\nturning it into and abyssal void.");
+
+    toggle1 = BeatSaberUI::CreateToggle(mainContainer->get_transform(), "Enable Void Menu Env", getConfig().config["voidMenuEnvEnabled"].GetBool(), 
+        [](bool value) {
+            getConfig().config["voidMenuEnvEnabled"].SetBool(value);
+        }
+    );
+
+    applyStyling();
 }
 
 void Tweakaroo::MainSettingsViewController::DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling) {
@@ -87,6 +104,4 @@ void Tweakaroo::MainSettingsViewController::DidActivate(bool firstActivation, bo
     mainDescription->set_color(UnityEngine::Color::get_gray());
     mainDescription->set_fontSize(4.5f);
     mainDescription->set_alignment(TextAlignmentOptions::Midline);
-
-
 }

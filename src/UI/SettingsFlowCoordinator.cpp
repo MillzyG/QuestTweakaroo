@@ -1,3 +1,5 @@
+#include "main.hpp"
+
 #include "UI/SettingsFlowCoordinator.hpp"
 
 #include "System/Action.hpp"
@@ -26,11 +28,12 @@ void Tweakaroo::SettingsFlowCoordinator::DidActivate(bool firstActivation, bool 
 
     Tweakaroo::Instances::settingsFlowCoordinatorInstance = this;
 
-    SetTitle(il2cpp_utils::createcsstr("Tweakaroo Settings"), HMUI::ViewController::AnimationType::In);
+    SetTitle(il2cpp_utils::newcsstr("Tweakaroo Settings"), HMUI::ViewController::AnimationType::In);
     showBackButton = true;
     ProvideInitialViewControllers(MainSettingsViewController, NavigationViewController, nullptr, nullptr, nullptr);
 }
 
 void Tweakaroo::SettingsFlowCoordinator::BackButtonWasPressed(HMUI::ViewController* topViewController) {
+    getConfig().Write();
     this->parentFlowCoordinator->DismissFlowCoordinator(this, HMUI::ViewController::AnimationDirection::Horizontal, nullptr, false);
 }

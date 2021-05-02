@@ -16,5 +16,6 @@ namespace Tweakaroo {
             static void resetView();
             static void noPromoConfig();
             static void noNamesConfig();
+            static void voidMenuEnvConfig();
     };
 }

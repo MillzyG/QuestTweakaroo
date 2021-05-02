@@ -7,6 +7,12 @@
 
 #include "GlobalNamespace/PromoViewController.hpp"
 #include "GlobalNamespace/PauseMenuManager.hpp"
+#include "GlobalNamespace/MainMenuViewController.hpp"
+
+#include "TMPro/TextMeshProUGUI.hpp"
+
+#include "questui/shared/BeatSaberUI.hpp"
+using namespace QuestUI;
 
 // HOOK INCLUDES
 
@@ -25,10 +31,19 @@ MAKE_HOOK_OFFSETLESS(PauseMenuManager_ShowMenu, void,
     Tweakaroo::Tweaks::NoNames(self);
 }
 
+MAKE_HOOK_OFFSETLESS(MainMenuViewController_DidActivate, void,
+    GlobalNamespace::MainMenuViewController* self, bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling
+) {
+    MainMenuViewController_DidActivate(self, firstActivation, addedToHierarchy, screenSystemEnabling);
+    Tweakaroo::Tweaks::VoidMenuEnv(self, firstActivation);
+}
+
+
 
 
 
 void Tweakaroo::InstallHooks() {
     INSTALL_HOOK_OFFSETLESS(getLogger(), PromoViewController_DidActivate, il2cpp_utils::FindMethodUnsafe("", "PromoViewController", "DidActivate", 3));
     INSTALL_HOOK_OFFSETLESS(getLogger(), PauseMenuManager_ShowMenu, il2cpp_utils::FindMethodUnsafe("", "PauseMenuManager", "ShowMenu", 0));
+    INSTALL_HOOK_OFFSETLESS(getLogger(), MainMenuViewController_DidActivate, il2cpp_utils::FindMethodUnsafe("", "MainMenuViewController", "DidActivate", 3));
 }

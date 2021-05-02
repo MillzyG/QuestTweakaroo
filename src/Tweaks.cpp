@@ -1,9 +1,10 @@
 #include "main.hpp"
 #include "Tweaks.hpp"
 
-#include "GlobalNamespace/PromoViewController.hpp"
-#include "GlobalNamespace/PauseMenuManager.hpp"
-#include "GlobalNamespace/LevelBar.hpp"
+#include <string>
+
+#include "questui/shared/BeatSaberUI.hpp"
+using namespace QuestUI;
 
 #include "TMPro/TextMeshProUGUI.hpp"
 
@@ -21,5 +22,9 @@ void Tweakaroo::Tweaks::NoNames(GlobalNamespace::PauseMenuManager* self) {
     }
 }
 
-
-
+void Tweakaroo::Tweaks::VoidMenuEnv(GlobalNamespace::MainMenuViewController* self, bool firstActivation) {
+    if (getConfig().config["voidMenuEnvEnabled"].GetBool()) {
+        UnityEngine::GameObject::Instantiate(UnityEngine::GameObject::Find(il2cpp_utils::newcsstr("Logo")));
+        UnityEngine::GameObject::Find(il2cpp_utils::newcsstr("MenuEnvironment"))->SetActive(false);
+    }
+}
