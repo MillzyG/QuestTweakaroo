@@ -1,6 +1,6 @@
 #include "main.hpp"
-#include "hooks.hpp"
-#include "TweakarooConfig.hpp"
+#include "ITweak.hpp"
+#include "Tweaks/NoNames.hpp"
 
 #include "UI/SettingsFlowCoordinator.hpp"
 #include "UI/MainSettingsViewController.hpp"
@@ -8,6 +8,8 @@
 
 #include "questui/shared/QuestUI.hpp"
 #include "custom-types/shared/register.hpp"
+
+#include <list>
 
 static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
 
@@ -29,14 +31,14 @@ extern "C" void setup(ModInfo& info) {
     info.id = ID;
     info.version = VERSION;
     modInfo = info;
-	
-    createConfig();
 
     getConfig().Load(); // Load the config file
     getLogger().info("Completed setup!");
-
-    
 }
+
+std::list<Tweakaroo::ITweak*> tweaks = {
+    new Tweakaroo::Tweaks::NoNames()
+};
 
 // Called later on in the game loading - a good time to install function hooks
 extern "C" void load() {
@@ -45,7 +47,10 @@ extern "C" void load() {
     getLogger().info("Installing hooks...");
     // Install our hooks (none defined yet)
 
-    Tweakaroo::InstallHooks();
+    for (Tweakaroo::ITweak* tweak : tweaks) {
+        tweak->CreateJSONConfig();
+        tweak->InstallHooks();
+    }
 
     custom_types::Register::RegisterTypes<
         Tweakaroo::SettingsFlowCoordinator,

@@ -1,6 +1,8 @@
 #include "main.hpp"
+#include "ITweak.hpp"
 #include "UI/NavigationViewController.hpp"
 #include "UI/SettingsFlowCoordinator.hpp"
+using namespace Tweakaroo::MainSettingsConfig;
 
 #include "questui/shared/BeatSaberUI.hpp"
 #include "questui/shared/QuestUI.hpp"
@@ -25,43 +27,22 @@ UnityEngine::GameObject* navContainer;
 
 TextMeshProUGUI* navTitle;
 
-UnityEngine::UI::Button* energyPercentage;
-UnityEngine::UI::Button* noPromo;
-UnityEngine::UI::Button* noNames;
-UnityEngine::UI::Button* RGBMenu;
-UnityEngine::UI::Button* voidMenuEnv;
-
 void Tweakaroo::NavigationViewController::DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling) {
     if (!firstActivation) return;
 
     navContainer = BeatSaberUI::CreateScrollableSettingsContainer(get_transform());
+    navContainer->get_transform()->set_localPosition(UnityEngine::Vector3(15.0f, 0.0f, 0.0f));
 
     navTitle = BeatSaberUI::CreateText(navContainer->get_transform(), "Tweaks");
     navTitle->set_fontSize(6.0f);
     navTitle->set_alignment(TextAlignmentOptions::Midline);
 
-
-    noPromo = BeatSaberUI::CreateUIButton(navContainer->get_transform(), "No Promo",
-        []() {
-            Tweakaroo::MainSettingsConfig::noPromoConfig();
-        }
-    );
-
-    noNames = BeatSaberUI::CreateUIButton(navContainer->get_transform(), "No Names",
-        []() {
-            Tweakaroo::MainSettingsConfig::noNamesConfig();
-        }
-    );
-
-    RGBMenu = BeatSaberUI::CreateUIButton(navContainer->get_transform(), "RGB Menu",
-        []() {
-
-        }
-    );
-
-    voidMenuEnv = BeatSaberUI::CreateUIButton(navContainer->get_transform(), "Void Menu Env", 
-        []() {
-            Tweakaroo::MainSettingsConfig::voidMenuEnvConfig();
-        }
-    );
+    for (ITweak* tweak : tweaks) {
+        BeatSaberUI::CreateUIButton(navContainer->get_transform(), tweak->GetName(), 
+            [tweak]{
+                resetView();
+                tweak->CreateConfig(getMainContainer()->get_transform());
+            }
+        );
+    }
 }

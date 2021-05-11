@@ -26,6 +26,8 @@ UnityEngine::GameObject* mainContainer;
 TextMeshProUGUI* mainTitle;
 TextMeshProUGUI* mainDescription;
 
+UnityEngine::Transform* transform;
+
 UnityEngine::UI::Toggle* toggle1 = nullptr;
 
 void applyStyling() {
@@ -38,62 +40,19 @@ void applyStyling() {
 }
 
 void Tweakaroo::MainSettingsConfig::resetView() {
-    UnityEngine::GameObject::Destroy(mainTitle->get_gameObject());
-    UnityEngine::GameObject::Destroy(mainDescription->get_gameObject());
-    
-    if (toggle1 != nullptr) {
-        UnityEngine::GameObject::Destroy(toggle1->get_transform()->get_parent()->get_gameObject());
-    }
+    UnityEngine::GameObject::Destroy(mainContainer);
+    mainContainer = nullptr;
+    mainContainer = BeatSaberUI::CreateScrollableSettingsContainer(transform);
 }
 
-void Tweakaroo::MainSettingsConfig::noPromoConfig() {
-    resetView();
-
-    mainTitle = BeatSaberUI::CreateText(mainContainer->get_transform(), "No Promo");
-    mainDescription = BeatSaberUI::CreateText(mainContainer->get_transform(), "Removes the Promo View Controller from the Main menu.");
-
-    toggle1 = BeatSaberUI::CreateToggle(mainContainer->get_transform(), "Enable No Promo", getConfig().config["noPromoEnabled"].GetBool(),
-        [](bool value) {
-            getConfig().config["noPromoEnabled"].SetBool(value);
-        }
-    );
-
-    applyStyling();
-}
-
-void Tweakaroo::MainSettingsConfig::noNamesConfig() {
-    resetView();
-
-    mainTitle = BeatSaberUI::CreateText(mainContainer->get_transform(), "No Names");
-    mainDescription = BeatSaberUI::CreateText(mainContainer->get_transform(), "Removes the Author Name Text from\nthe level bar in the pause menu.");
-
-    toggle1 = BeatSaberUI::CreateToggle(mainContainer->get_transform(), "Enable No Names", getConfig().config["noNamesEnabled"].GetBool(),
-        [](bool value) {
-            getConfig().config["noNamesEnabled"].SetBool(value);
-        }
-    );
-
-    applyStyling();
-}
-
-void Tweakaroo::MainSettingsConfig::voidMenuEnvConfig() {
-    resetView();
-
-    mainTitle = BeatSaberUI::CreateText(mainContainer->get_transform(), "Void Menu Env");
-    mainDescription = BeatSaberUI::CreateText(mainContainer->get_transform(), "Deactivates the Menu Environment\nturning it into and abyssal void.");
-
-    toggle1 = BeatSaberUI::CreateToggle(mainContainer->get_transform(), "Enable Void Menu Env", getConfig().config["voidMenuEnvEnabled"].GetBool(), 
-        [](bool value) {
-            getConfig().config["voidMenuEnvEnabled"].SetBool(value);
-        }
-    );
-
-    applyStyling();
+UnityEngine::GameObject* Tweakaroo::MainSettingsConfig::getMainContainer() {
+    return mainContainer;
 }
 
 void Tweakaroo::MainSettingsViewController::DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling) {
     if (!firstActivation) return;
 
+    transform = get_transform();
     mainContainer = BeatSaberUI::CreateScrollableSettingsContainer(get_transform());
 
     mainTitle = BeatSaberUI::CreateText(mainContainer->get_transform(), "Tweakaroo 2.0.0 for BeatSaber 1.14.0");
