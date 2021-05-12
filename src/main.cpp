@@ -1,6 +1,8 @@
 #include "main.hpp"
 #include "ITweak.hpp"
+
 #include "Tweaks/NoNames.hpp"
+#include "Tweaks/NoPromo.hpp"
 
 #include "UI/SettingsFlowCoordinator.hpp"
 #include "UI/MainSettingsViewController.hpp"
@@ -37,7 +39,8 @@ extern "C" void setup(ModInfo& info) {
 }
 
 std::list<Tweakaroo::ITweak*> tweaks = {
-    new Tweakaroo::Tweaks::NoNames()
+    new Tweakaroo::Tweaks::NoNames(),
+    new Tweakaroo::Tweaks::NoPromo()
 };
 
 // Called later on in the game loading - a good time to install function hooks
